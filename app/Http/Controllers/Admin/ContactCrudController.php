@@ -39,14 +39,14 @@ class ContactCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::field('name');
-        CRUD::field('email');
-        CRUD::addField([
+          CRUD::column('name');
+        CRUD::column('email');
+        CRUD::addColumn([
             'name' => 'image',
             'type' => 'image',
             'label' => 'Contact Image',
-            'crop' => true,
-            'aspect_ratio' => 1,
+            'height' => '60px',
+            'width'  => '60px',
         ]);
     }
 
@@ -58,13 +58,17 @@ class ContactCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ContactRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+       CRUD::setValidation(ContactRequest::class);
 
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::field('name')->type('text')->label('Full Name');
+        CRUD::field('email')->type('email')->label('Email Address');
+        CRUD::addField([
+            'name' => 'image',
+            'type' => 'upload',
+            'label' => 'Contact Image',
+            'upload' => true,
+            'disk' => 'public',
+        ]);
     }
 
     /**
