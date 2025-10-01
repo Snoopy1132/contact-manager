@@ -71,6 +71,19 @@ class ContactCrudController extends CrudController
         ]);
     }
 
+    protected function setupShowOperation()
+    {
+    CRUD::column('name');
+    CRUD::column('email');
+    CRUD::addColumn([
+        'name'  => 'image',
+        'label' => 'Contact Image',
+        'type'  => 'image',
+        'height' => '120px',
+        'width'  => '120px',
+    ]);
+    }
+
     /**
      * Define what happens when the Update operation is loaded.
      *
