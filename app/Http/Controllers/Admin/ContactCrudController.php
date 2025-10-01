@@ -73,15 +73,17 @@ class ContactCrudController extends CrudController
 
     protected function setupShowOperation()
     {
-    CRUD::column('name');
-    CRUD::column('email');
-    CRUD::addColumn([
-        'name'  => 'image',
-        'label' => 'Contact Image',
-        'type'  => 'image',
-        'height' => '120px',
-        'width'  => '120px',
-    ]);
+        CRUD::column('name');
+        CRUD::column('email');
+        CRUD::addColumn([
+            'name'  => 'image',
+            'label' => 'Contact Image',
+            'type'  => 'image',
+            'height' => '120px',
+            'width'  => '120px',
+        ]);
+        CRUD::column('created_at')->label('Created At');
+        CRUD::column('updated_at')->label('Updated At');
     }
 
     /**
