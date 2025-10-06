@@ -52,7 +52,7 @@
 `sudo docker compose up -d --build`  🕒 1s
 `exit`
 
-## Created files
+## 📄 Created files
 
 ### Dockerfile
 ```bash
@@ -165,7 +165,7 @@ server {
 ## 🌐 Link to Contact Manager
 http://37.221.194.51/admin
 
-## Admin Details
+## 👩‍💼 Admin Details
 <p>Email: Admin@example.com</p>
 <p>Password: password</p>
 
