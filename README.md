@@ -1,61 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🧩 learning materials and Installation
+- Backpack Documentation for Admin Panel – ⏱️ 2 hours
+- Docker Documentation – ⏱️ 2 hours
+- Nginx Documentation – ⏱️ 2 hours 30 mins
+- Installing Docker and nginx – ⏱️ 1 hour
 
-## About Laravel
+## 📞 Contact Manager (Laravel + Backpack)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+`git -m “Initial commit -  fresh Laravel Project/spend 10mins”`  
+`git -m “Install Backpack for Laravel  /spend 40 mins”`  
+`git -m “Initial Backpack installation with admin user  /spend 30 mins”`  
+`git -m “Fixed image Error  /spend 45 mins”`  
+`git -m “Fixed image name  /spend 30 mins”`  
+`git -m “Added and created at 10 mins”`  
+`git -m “Changed Route  /spend 10 mins”`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📞 Deployment of Contact Manager
+`sudo apt update`  🕒 30s  
+`sudo apt install -y ca-certificates curl gnupg lsb-release`  🕒 15s  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+`sudo mkdir -m 0755 -p /etc/apt/keyrings`  🕒 1s  
+`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg`  🕒 5s  
 
-## Learning Laravel
+`echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`  🕒 1s  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+`sudo apt update`  🕒 20s  
+`sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin`  🕒 2 mins  
+`docker --version`  🕒 1s  
+`docker compose version`  🕒 1s  
+`cd /opt`  🕒 1s  
+`sudo git clone https://github.com/Snoopy1132/contact-manager.git`  🕒 15–25s  
+`cd contact-manager`  🕒 1s  
+`sudo nano docker-compose.yml`  🕒 30 mins  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+`nano Dockerfile`  🕒 2 hours 30 mins  
+`sudo nano nginx.conf`  🕒 3 hours  
+`sudo docker exec -it contact-manager-app bash`  🕒 1s  
+`composer install`  🕒 3 mins  
+`cp .env.example .env`  🕒 1s  
+`sed -i 's|APP_URL=.*|APP_URL=http://localhost|' .env`  🕒 1s  
+`sed -i 's|DB_HOST=.*|DB_HOST=db|' .env`  🕒 1s  
+`sed -i 's|DB_DATABASE=.*|DB_DATABASE=contact_manager|' .env`  🕒 1s  
+`sed -i 's|DB_USERNAME=.*|DB_USERNAME=contact|' .env`  🕒 1s  
+`sed -i 's|DB_PASSWORD=.*|DB_PASSWORD=contactpass|' .env`  🕒 1s  
+`php artisan key:generate`  🕒 1s  
+`php artisan migrate --seed`  🕒 1s  
+`php artisan storage:link`  🕒 1s  
+`chmod -R 775 storage bootstrap/cache`  🕒 1s  
+`chown -R www-data:www-data storage bootstrap/cache`  🕒 1s  
+`nano .env`  🕒 1 hour  
+`sudo docker compose up -d --build`  🕒 1s
+`exit`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Created files
 
-## Laravel Sponsors
+### Dockerfile
+```bash
+FROM php:8.2-fpm
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-### Premium Partners
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+WORKDIR /var/www
+COPY . .
 
-## Contributing
+RUN composer install && \
+    php artisan key:generate && \
+    chmod -R 777 storage bootstrap/cache
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### docker-compose.yml
+```bash
+version: "3.8"
 
-## Code of Conduct
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: contact-manager-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+    networks:
+      - contactnet
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  db:
+    image: mysql:8
+    container_name: contact-manager-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: contact_manager
+      MYSQL_USER: contact
+      MYSQL_PASSWORD: contactpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - contactnet
 
-## Security Vulnerabilities
+  nginx:
+    image: nginx:latest
+    container_name: contact-manager-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - contactnet
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+networks:
+  contactnet:
 
-## License
+volumes:
+  dbdata:
+    driver: local
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### nginx.conf
+```bash
+server {
+    listen 80;
+    server_name _;
+
+    root /var/www/public;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location /storage/ {
+        alias /var/www/storage/;
+        access_log off;
+        expires 1M;
+        add_header Cache-Control "public";
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass contact-manager-app:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param HTTPS $https if_not_empty;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+
+## 🌐 Link to Contact Manager
+http://37.221.194.51/admin
+
+## Admin Details
+<p>Email: Admin@example.com</p>
+<p>Password: password</p>
+
