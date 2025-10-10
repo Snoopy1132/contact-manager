@@ -33,6 +33,16 @@ return [
     |
     */
 
+    'use_vite' => true,
+
+    'vite_styles' => [
+        'resources/css/app.css',
+    ],
+
+    'vite_scripts' => [
+        'resources/js/app.js',
+    ],
+
     // Date & Datetime Format Syntax: https://carbon.nesbot.com/docs/#api-localization
     'default_date_format' => 'D MMM YYYY',
     'default_datetime_format' => 'D MMM YYYY, HH:mm',
@@ -79,7 +89,7 @@ return [
     'developer_link' => 'http://tabacitu.ro',
 
     // Show powered by Laravel Backpack in the footer? true/false
-    'show_powered_by' => true,
+    'show_powered_by' => false,
 
     // ---------
     // DASHBOARD
